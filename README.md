@@ -1,20 +1,20 @@
-# Template
+# CD Player
 
-+ Dependencies: none
-+ Includes: `template.h`
++ Dependencies: `none`
++ Includes: `player.h`
 
 
 ## How to build
 
 ```
-$ git clone http://xxx/template.git
-$ cd template
+$ git clone https://github.com/kaorukakinuma/cd-player.git
+$ cd cd-player
 $ sudo ./mk.sh
 #snip
 $ ls /home/lib
-libtemplate.a
+libplayer.a
 $ ls /home/include
-template.h
+player.h
 ```
 
 
@@ -61,12 +61,23 @@ namespace STATE {
     }
 }
 
-
 Player <|. PLAYER : <<implements>>
 PLAYER --> State
 State <|. STATE : <<implements>>
 ```
 
+```plantuml
+[*] -> Idle
+
+Idle --> Play : Play
+Idle --> Idle : Stop
+
+Play --> Pause : Play
+Play --> Idle : Stop
+
+Pause --> Play : Play
+Pause --> Idle : Stop
+```
 
 ## Usage
 
@@ -82,9 +93,10 @@ int main( void )
     // play
     pPlayer->Play( pPlayer );
 
-    // snip
+    // pause
+    pPlayer->Play( pPlayer );
 
-    // stop
+    // idle
     pPlayer->Stop( pPlayer );
 
     // destroy instance
