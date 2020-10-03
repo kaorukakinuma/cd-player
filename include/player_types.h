@@ -14,6 +14,6 @@ typedef enum {
     PLAYER_E_OK,
     PLAYER_E_OBJ,
     PLAYER_E_SYS,
-} PlayerErr;
+} PlayerErcd;
 
 #endif /* _PLAYER_TYPES_H_ */

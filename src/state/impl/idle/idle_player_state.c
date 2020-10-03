@@ -17,7 +17,7 @@ typedef struct {
 
 /* ------------------------------------------------------------------------- */
 
-static PlayerErr Play( PlayerState *pSuper, StateCode *pState )
+static PlayerErcd Play( PlayerState *pSuper, StateCode *pState )
 {
     IdlePlayerState *pSelf = (IdlePlayerState *)pSuper;
     (void)pSelf;
@@ -26,7 +26,7 @@ static PlayerErr Play( PlayerState *pSuper, StateCode *pState )
     return PLAYER_E_OK;
 }
 
-static PlayerErr Stop( PlayerState *pSuper, StateCode *pState )
+static PlayerErcd Stop( PlayerState *pSuper, StateCode *pState )
 {
     IdlePlayerState *pSelf = (IdlePlayerState *)pSuper;
     (void)pSelf;

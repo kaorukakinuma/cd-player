@@ -17,8 +17,8 @@ typedef enum {
 } StateCode;
 
 struct PlayerState {
-    PlayerErr (*Play)( PlayerState *pSelf, StateCode *pState );
-    PlayerErr (*Stop)( PlayerState *pSelf, StateCode *pState );
+    PlayerErcd (*Play)( PlayerState *pSelf, StateCode *pState );
+    PlayerErcd (*Stop)( PlayerState *pSelf, StateCode *pState );
 };
 
 #endif /* _PLAYER_STATE_H_ */

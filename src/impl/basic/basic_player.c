@@ -24,14 +24,14 @@ typedef struct {
 
 /* ------------------------------------------------------------------------- */
 
-static PlayerErr Play( Player *pSuper )
+static PlayerErcd Play( Player *pSuper )
 {
     BasicPlayer *pSelf = (BasicPlayer *)pSuper;
     PlayerState *pState = pSelf->apState[pSelf->currentState];
     return pState->Play( pState, &pSelf->currentState );
 }
 
-static PlayerErr Stop( Player *pSuper )
+static PlayerErcd Stop( Player *pSuper )
 {
     BasicPlayer *pSelf = (BasicPlayer *)pSuper;
     PlayerState *pState = pSelf->apState[pSelf->currentState];
