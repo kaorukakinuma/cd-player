@@ -1,7 +1,7 @@
 /*
  *    file:             play_player_state.c
  *    creation date:    2020-10-02
- *    last update:      2020-10-02
+ *    last update:      2020-10-03
  *    author:           kaoru kakinuma
  */
 #include <stdbool.h>
@@ -17,19 +17,21 @@ typedef struct {
 
 /* ------------------------------------------------------------------------- */
 
-static PlayerErr Play( PlayerState *pSuper )
+static PlayerErr Play( PlayerState *pSuper, StateCode *pState )
 {
     PlayPlayerState *pSelf = (PlayPlayerState *)pSuper;
     (void)pSelf;
     printf( "Pause.\n" );
+    *pState = STATE_PAUSE;
     return PLAYER_E_OK;
 }
 
-static PlayerErr Stop( PlayerState *pSuper )
+static PlayerErr Stop( PlayerState *pSuper, StateCode *pState )
 {
     PlayPlayerState *pSelf = (PlayPlayerState *)pSuper;
     (void)pSelf;
     printf( "Idle.\n" );
+    *pState = STATE_IDLE;
     return PLAYER_E_OK;
 }
 

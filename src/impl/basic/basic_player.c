@@ -1,7 +1,7 @@
 /*
  *    file:             basic_player.c
  *    creation date:    2020-09-30
- *    last update:      2020-10-02
+ *    last update:      2020-10-03
  *    author:           kaoru kakinuma
  */
 #include <stdbool.h>
@@ -15,18 +15,11 @@
 #include "basic_player.h"
 #include "player.h"
 
-typedef enum {
-    IDLE,
-    PLAY,
-    PAUSE,
-    STATENUM
-} State;
-
 typedef struct {
     Player         base;
     bool           created;
-    State          currentState;
-    PlayerState   *apState[STATENUM];
+    StateCode      currentState;
+    PlayerState   *apState[STATE_NUM];
 } BasicPlayer;
 
 /* ------------------------------------------------------------------------- */
@@ -34,45 +27,15 @@ typedef struct {
 static PlayerErr Play( Player *pSuper )
 {
     BasicPlayer *pSelf = (BasicPlayer *)pSuper;
-
     PlayerState *pState = pSelf->apState[pSelf->currentState];
-    pState->Play( pState );
-
-    switch ( pSelf->currentState )
-    {
-    case IDLE:  pSelf->currentState = PLAY;
-                break;
-    case PLAY:  pSelf->currentState = PAUSE;
-                break;
-    case PAUSE: pSelf->currentState = PLAY;
-                break;
-    default:
-        break;
-    }
-
-    return PLAYER_E_OK;
+    return pState->Play( pState, &pSelf->currentState );
 }
 
 static PlayerErr Stop( Player *pSuper )
 {
     BasicPlayer *pSelf = (BasicPlayer *)pSuper;
-
     PlayerState *pState = pSelf->apState[pSelf->currentState];
-    pState->Stop( pState );
-
-    switch ( pSelf->currentState )
-    {
-    case IDLE:  pSelf->currentState = IDLE;
-                break;
-    case PLAY:  pSelf->currentState = IDLE;
-                break;
-    case PAUSE: pSelf->currentState = IDLE;
-                break;
-    default:
-        break;
-    }
-
-    return PLAYER_E_OK;
+    return pState->Stop( pState, &pSelf->currentState );
 }
 
 static const Player sBase = {
@@ -89,12 +52,12 @@ Player * __new__BasicPlayer( void )
     if ( sSelf.created ) return NULL;
 
     /* initialize instance */
-    sSelf.base           = sBase;
-    sSelf.created        = true;
-    sSelf.currentState   = IDLE;
-    sSelf.apState[IDLE]  = __new__IdlePlayerState();
-    sSelf.apState[PLAY]  = __new__PlayPlayerState();
-    sSelf.apState[PAUSE] = __new__PausePlayerState();
+    sSelf.base         = sBase;
+    sSelf.created      = true;
+    sSelf.currentState = STATE_IDLE;
+    sSelf.apState[STATE_IDLE]  = __new__IdlePlayerState();
+    sSelf.apState[STATE_PLAY]  = __new__PlayPlayerState();
+    sSelf.apState[STATE_PAUSE] = __new__PausePlayerState();
 
     return (Player *)&sSelf;
 }
@@ -105,10 +68,14 @@ Player * __del__BasicPlayer( Player *pSelf )
     pSelf->Stop( pSelf );
 
     BasicPlayer *pSub = (BasicPlayer *)pSelf;
-    pSub->created        = false;
-    pSub->apState[IDLE]  = __del__IdlePlayerState(  pSub->apState[IDLE]  );
-    pSub->apState[PLAY]  = __del__PlayPlayerState(  pSub->apState[PLAY]  );
-    pSub->apState[PAUSE] = __del__PausePlayerState( pSub->apState[PAUSE] );
+    pSub->created = false;
+
+    pSub->apState[STATE_IDLE] =
+        __del__IdlePlayerState( pSub->apState[STATE_IDLE] );
+    pSub->apState[STATE_PLAY] =
+        __del__PlayPlayerState( pSub->apState[STATE_PLAY] );
+    pSub->apState[STATE_PAUSE] =
+        __del__PausePlayerState( pSub->apState[STATE_PAUSE] );
 
     return NULL;
 }
