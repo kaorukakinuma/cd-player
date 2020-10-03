@@ -50,16 +50,16 @@ class State << (I, yellow) interface >> {
 }
 namespace STATE {
     class Idle << (S, orange) >> {
-        + constructor()
-        + destructor()
+        - constructor()
+        - destructor()
     }
     class Play << (S, orange) >> {
-        + constructor()
-        + destructor()
+        - constructor()
+        - destructor()
     }
     class Pause << (S, orange) >> {
-        + constructor()
-        + destructor()
+        - constructor()
+        - destructor()
     }
 }
 

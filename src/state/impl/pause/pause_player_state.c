@@ -11,8 +11,8 @@
 #include "player_state.h"
 
 typedef struct {
-    PlayerState base;
-    bool        created;
+    PlayerState    base;
+    bool           created;
 } PausePlayerState;
 
 /* ------------------------------------------------------------------------- */
@@ -49,8 +49,8 @@ PlayerState * __new__PausePlayerState( void )
     if ( sSelf.created ) return NULL;
 
     /* initialize instance */
-    sSelf.base           = sBase;
-    sSelf.created        = true;
+    sSelf.base    = sBase;
+    sSelf.created = true;
 
     return (PlayerState *)&sSelf;
 }
