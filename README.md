@@ -30,6 +30,8 @@ $ ./test/run.sh
 ## Design
 
 ```plantuml
+@startuml
+
 class Player << (I, yellow) interface >> {
     + Play()
     + Stop()
@@ -64,9 +66,13 @@ namespace STATE {
 Player <|. PLAYER : <<implements>>
 PLAYER --> State
 State <|. STATE : <<implements>>
+
+@enduml
 ```
 
 ```plantuml
+@startuml
+
 [*] -> Idle
 
 Idle --> Play : Play
@@ -77,6 +83,8 @@ Play --> Idle : Stop
 
 Pause --> Play : Play
 Pause --> Idle : Stop
+
+@enduml
 ```
 
 ## Usage
