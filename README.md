@@ -98,14 +98,9 @@ int main( void )
     // create instance
     Player *pPlayer = __new__BasicPlayer();
 
-    // play
-    pPlayer->Play( pPlayer );
-
-    // pause
-    pPlayer->Play( pPlayer );
-
-    // idle
-    pPlayer->Stop( pPlayer );
+    pPlayer->Play( pPlayer ); // play
+    pPlayer->Play( pPlayer ); // pause
+    pPlayer->Stop( pPlayer ); // idle
 
     // destroy instance
     pPlayer = __del__BasicPlayer( pPlayer );
