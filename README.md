@@ -1,14 +1,12 @@
 # CD Player
 
-+ Dependencies: `none`
-+ Includes: `player.h`
+Dependencies: `none`  
+Includes: `player.h`
 
 
-## How to build
+## How to Build
 
-```
-$ git clone https://github.com/kaorukakinuma/cd-player.git
-$ cd cd-player
+```sh
 $ sudo ./mk.sh
 #snip
 $ ls /home/lib
@@ -16,15 +14,6 @@ libplayer.a
 $ ls /home/include
 player.h
 ```
-
-
-## How to run a test
-
-```
-$ ./test/run.sh
-```
-
----
 
 
 ## Design
@@ -86,6 +75,7 @@ Pause --> Idle : Stop
 
 @enduml
 ```
+
 
 ## Usage
 
