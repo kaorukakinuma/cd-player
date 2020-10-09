@@ -1,7 +1,7 @@
 # CD Player
 
 Dependencies: `none`  
-Includes: `player.h`
+Includes: `player.h` `basic_player.h`
 
 
 ## How to Build
@@ -12,7 +12,7 @@ $ sudo ./mk.sh
 $ ls /home/lib
 libplayer.a
 $ ls /home/include
-player.h
+player.h ...
 ```
 
 
@@ -85,16 +85,13 @@ Pause --> Idle : Stop
 
 int main( void )
 {
-    // create instance
     Player *pPlayer = __new__BasicPlayer();
 
     pPlayer->Play( pPlayer ); // play
     pPlayer->Play( pPlayer ); // pause
     pPlayer->Stop( pPlayer ); // idle
 
-    // destroy instance
     pPlayer = __del__BasicPlayer( pPlayer );
-
     return 0;
 }
 ```
