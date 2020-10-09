@@ -1,35 +1,26 @@
-# Template
+# CD Player
 
-+ Dependencies: none
-+ Includes: `template.h`
+Dependencies: `none`  
+Includes: `player.h` `basic_player.h`
 
 
-## How to build
+## How to Build
 
-```
-$ git clone http://xxx/template.git
-$ cd template
+```sh
 $ sudo ./mk.sh
 #snip
 $ ls /home/lib
-libtemplate.a
+libplayer.a
 $ ls /home/include
-template.h
+player.h ...
 ```
-
-
-## How to run a test
-
-```
-$ ./test/run.sh
-```
-
----
 
 
 ## Design
 
 ```plantuml
+@startuml
+
 class Player << (I, yellow) interface >> {
     + Play()
     + Stop()
@@ -48,23 +39,41 @@ class State << (I, yellow) interface >> {
 }
 namespace STATE {
     class Idle << (S, orange) >> {
-        + constructor()
-        + destructor()
+        - constructor()
+        - destructor()
     }
     class Play << (S, orange) >> {
-        + constructor()
-        + destructor()
+        - constructor()
+        - destructor()
     }
     class Pause << (S, orange) >> {
-        + constructor()
-        + destructor()
+        - constructor()
+        - destructor()
     }
 }
-
 
 Player <|. PLAYER : <<implements>>
 PLAYER --> State
 State <|. STATE : <<implements>>
+
+@enduml
+```
+
+```plantuml
+@startuml
+
+[*] -> Idle
+
+Idle --> Play : Play
+Idle --> Idle : Stop
+
+Play --> Pause : Play
+Play --> Idle : Stop
+
+Pause --> Play : Play
+Pause --> Idle : Stop
+
+@enduml
 ```
 
 
@@ -76,20 +85,13 @@ State <|. STATE : <<implements>>
 
 int main( void )
 {
-    // create instance
     Player *pPlayer = __new__BasicPlayer();
 
-    // play
-    pPlayer->Play( pPlayer );
+    pPlayer->Play( pPlayer ); // play
+    pPlayer->Play( pPlayer ); // pause
+    pPlayer->Stop( pPlayer ); // idle
 
-    // snip
-
-    // stop
-    pPlayer->Stop( pPlayer );
-
-    // destroy instance
     pPlayer = __del__BasicPlayer( pPlayer );
-
     return 0;
 }
 ```
